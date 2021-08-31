@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<!--[if IE 8 ]><html dir="{{ direction }}" lang="{{ lang }}" class="ie8"><![endif]-->
+<!--[if IE 9 ]><html dir="{{ direction }}" lang="{{ lang }}" class="ie9"><![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+<html dir="{{ direction }}" lang="{{ lang }}">
+<!--<![endif]-->
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>{{ title }}</title>
+<base href="{{ base }}" />
+{% if description %}
+<meta name="description" content="{{ description }}" />
+{% endif %}
+{% if keywords %}
+<meta name="keywords" content="{{ keywords }}" />
+{% endif %}
+<script src="catalog/view/javascript/jquery/jquery-3.3.1.min.js" type="text/javascript"></script>
+<link href="catalog/view/javascript/bootstrap-4.5.3/css/bootstrap.min.css" rel="stylesheet" media="screen" />
+<script src="catalog/view/javascript/bootstrap-4.5.3/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="catalog/view/javascript/bootstrap-4.5.3/js/bootstrap.bundle.min.js" type="text/javascript"></script>
+<link href="catalog/view/javascript/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&family=Russo+One&display=swap" rel="stylesheet"> 
+<link href="catalog/view/theme/default/stylesheet/style.css" rel="stylesheet">
+{% for style in styles %}
+<link href="{{ style.href }}" type="text/css" rel="{{ style.rel }}" media="{{ style.media }}" />
+{% endfor %}
+{% for script in scripts %}
+<script src="{{ script }}" type="text/javascript"></script>
+{% endfor %}
+<script src="catalog/view/javascript/common.js" type="text/javascript"></script>
+{% for link in links %}
+<link href="{{ link.href }}" rel="{{ link.rel }}" />
+{% endfor %}
+<link rel="shortcut icon" href="image/favicon.ico" type="image/x-icon" />
+<link rel="apple-touch-icon" sizes="57x57" href="image/apple-touch-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="image/apple-touch-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="image/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="image/apple-touch-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="image/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="image/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="image/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="image/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="image/apple-touch-icon-180x180.png">
+<link rel="icon" type="image/png" href="image/favicon-16x16.png" sizes="16x16">
+<link rel="icon" type="image/png" href="image/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="image/favicon-96x96.png" sizes="96x96">
+<link rel="icon" type="image/png" href="image/android-chrome-192x192.png" sizes="192x192">
+<meta name="msapplication-square70x70logo" content="image/smalltile.png" />
+<meta name="msapplication-square150x150logo" content="image/mediumtile.png" />
+<meta name="msapplication-wide310x150logo" content="image/widetile.png" />
+<meta name="msapplication-square310x310logo" content="image/largetile.png" />
+{% for analytic in analytics %}
+{{ analytic }}
+{% endfor %}
+</head>
+<body>
+<nav id="top">
+  <div class="container-lg">
+    {{ currency }}
+    {{ language }}
+    <div id="logo">
+      <a href="{{ home }}">
+		  <img src="catalog/view/theme/default/image/logo.png" data-toggle="tooltip" data-placement="bottom" title="{{ name }}" alt="{{ name }}" class="logo img-fluid d-none d-lg-block">
+		  <img src="catalog/view/theme/default/image/logo-min.png" data-toggle="tooltip" data-placement="bottom" title="{{ name }}" alt="{{ name }}" class="logo-min img-fluid d-lg-none">
+	  </a>
+    </div>
+    <ul class="nav justify-content-end">
+      <li lass="nav-item"><a class="nav-link" href="{{ wishlist }}" id="wishlist-total" data-toggle="tooltip" data-placement="bottom" title="{{ txt_wishlist }}"><span class="fa fa-heart"></span><span class="badge badge-pill badge-light">{{ text_wishlist }}</span></a></li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ account }}" data-toggle="tooltip" data-placement="bottom" title="{{ text_account }}"><span class="fa fa-user-circle-o"></span></a>
+      </li>
+      {% if logged %}
+      <li class="nav-item">
+        <a class="nav-link" href="{{ logout }}" data-toggle="tooltip" data-placement="bottom" title="{{ text_logout }}"><span class="fa fa-sign-out"></span></a>
+      </li>
+      {% endif %}
+    </ul>
+  </div>
+</nav>
+<header>
+  <div class="container-lg">
+    <div class="row">
+      <div class="offset-lg-3 col-lg-3">
+        <div class="address mb-3 mb-md-0">
+          <a href="tel:{{ telephone }}" class="d-none d-lg-block" data-toggle="tooltip" data-placement="bottom" title="Позвонить"><i class="fa fa-phone" aria-hidden="true"></i> {{ telephone }}</a><h1>{{ name }}</h1>
+		</div>
+      </div>
+      <div class="col-lg-4">{{ search }}</div>
+	  <div class="col-7 col-sm-9 col-md-10 mobile-addr d-lg-none d-flex justify-content-center align-items-center">
+		  <a href="tel:{{ telephone }}" data-toggle="tooltip" data-placement="bottom" title="Позвонить"><i class="fa fa-phone" aria-hidden="true"></i> {{ telephone }}</a>
+	  </div>
+      <div class="col-5 col-sm-3 col-md-2 col-lg-2">{{ cart }}</div>
+    </div>
+  </div>
+</header>
+{{ menu }}

@@ -1,0 +1,41 @@
+<div id="menu">
+	<div class="container-lg d-none d-lg-block">
+	<div class="row">
+		<div class="col-lg-3">
+			{% if categories %}
+			<h4 class="menu-title">{{ text_category }}</h4>
+			{% endif %}
+		</div>
+    	<div class="col-lg-9">
+      		<ul class="nav justify-content-end">
+			{% for item in infomenu %}
+        		<li class="nav-item">
+          			<a class="nav-link" href="{{ item.href }}">{{ item.name }}</a>
+        		</li>
+			{% endfor %}
+	  		</ul>
+    	</div>
+	</div>
+	</div>
+	{% if categories %}
+	<nav class="navbar mt-n2 d-lg-none">
+		<div class="navbar-brand">
+			<h4 class="menu-title">{{ text_category }}</h4>
+		</div>
+		<div class="nav-but">
+			<a type="button" class="nav-link btn-navbar navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse"><i class="fa fa-bars"></i></a>
+		</div>
+	</nav>
+	<div class="collapse navbar-collapse navbar-ex1-collapse">
+		<div class="list-group">
+			{% for category in categories %}
+				{% if category.category_id == category_id %} 
+				<a href="{{ category.href }}" class="list-group-item active">{{ category.name }}</a>
+				{% else %}
+				<a href="{{ category.href }}" class="list-group-item">{{ category.name }}</a>
+				{% endif %}
+			{% endfor %}
+		</div>
+	</div>
+	{% endif %}
+</div>

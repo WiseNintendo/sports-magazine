@@ -1,0 +1,62 @@
+{{ header }}
+<div id="account-account">
+<div class="container-lg">
+	<div class="row">
+	{{ column_left }}
+    {% if column_left and column_right %}
+    {% set class = 'col-lg-6' %}
+    {% elseif column_left or column_right %}
+    {% set class = 'col-lg-9' %}
+    {% else %}
+    {% set class = 'col-12' %}
+    {% endif %}
+    <div id="content" class="{{ class }}">
+	{{ content_top }}
+  	{% if success %}
+  		<div class="alert alert-success shadow mt-3"><i class="fa fa-check-circle"></i> {{ success }}</div>
+  	{% endif %}
+	<nav aria-label="breadcrumb" class="shadow mt-3">
+		<ol class="breadcrumb">
+		{% for breadcrumb in breadcrumbs %}
+			<li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+		{% endfor %}
+		</ol>
+	</nav>
+	<div class="row">
+	<div class="col-md-6">
+	<h2 class="pro-title">{{ text_my_account }}</h2>
+	<div class="list-group shadow">
+		<a href="{{ edit }}" class="list-group-item">{{ text_edit }}</a>
+		<a href="{{ password }}" class="list-group-item">{{ text_password }}</a>
+		<a href="{{ address }}" class="list-group-item">{{ text_address }}</a>
+	</div>
+	</div>
+	<div class="col-md-6">
+	<h2 class="pro-title">{{ text_my_orders }}</h2>
+	<div class="list-group shadow">
+		<a href="{{ order }}" class="list-group-item">{{ text_order }}</a>
+        {% if reward %}
+		<a href="{{ reward }}" class="list-group-item">{{ text_reward }}</a>
+        {% endif %}
+		<a href="{{ return }}" class="list-group-item">{{ text_return }}</a>
+		<a href="{{ wishlist }}" class="list-group-item">{{ text_wishlist }}</a>
+	</div>
+	</div>
+	{% if credit_cards %}
+	<div class="col-md-6">
+	<h2 class="pro-title">{{ text_credit_card }}</h2>
+	<div class="list-group shadow">
+		{% for credit_card in credit_cards %}
+			<a href="{{ credit_card.href }}" class="list-group-item">{{ credit_card.name }}</a>
+		{% endfor %}
+	</div>
+	</div>
+	{% endif %}
+	</div>
+	{{ content_bottom }}
+	</div>
+	{{ column_right }}
+	</div>
+</div>
+</div>
+{{ footer }}

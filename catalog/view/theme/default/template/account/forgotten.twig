@@ -1,0 +1,53 @@
+{{ header }}
+<div id="account-forgotten">
+<div class="container-lg">
+	<div class="row">
+	{{ column_left }}
+    {% if column_left and column_right %}
+    {% set class = 'col-lg-6' %}
+    {% elseif column_left or column_right %}
+    {% set class = 'col-lg-9' %}
+    {% else %}
+	{% set class = 'col-12' %}
+	{% endif %}
+	<div id="content" class="{{ class }}">
+	{{ content_top }}
+	{% if error_warning %}
+  		<div class="alert alert-danger shadow mt-3"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
+  	{% endif %}
+	<nav aria-label="breadcrumb" class="shadow mt-3">
+		<ol class="breadcrumb">
+		{% for breadcrumb in breadcrumbs %}
+			<li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+		{% endfor %}
+		</ol>
+	</nav>
+	<h2 class="pro-title">{{ heading_title }}</h2>
+	<div class="alert alert-light shadow mb-3" role="alert">
+		<p>{{ text_email }}</p>
+	</div>
+	<div class="list-content shadow mb-3">
+	<form action="{{ action }}" method="post" enctype="multipart/form-data" class="form-horizontal">
+		<fieldset>
+			<div class="input-group form-group">
+				<div class="input-group-prepend">
+					<div class="input-group-text"><i class="fa fa-envelope" aria-hidden="true"></i></div>
+				</div>
+              	<input type="text" name="email" value="{{ email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control" required>
+          	</div>
+		</fieldset>
+        <div class="buttons clearfix mt-3">
+          <div class="pull-left"><a href="{{ back }}" class="btn btn-light">{{ button_back }}</a></div>
+          <div class="pull-right">
+            <input type="submit" value="{{ button_submit }}" class="btn btn-primary">
+          </div>
+        </div>
+	</form>
+	</div>
+	{{ content_bottom }}
+	</div>
+    {{ column_right }}
+	</div>
+</div>
+</div>
+{{ footer }}

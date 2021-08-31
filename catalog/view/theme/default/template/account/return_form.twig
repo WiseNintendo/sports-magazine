@@ -1,0 +1,180 @@
+{{ header }}
+<div id="account-return">
+<div class="container-lg">
+  <div class="row">
+	{{ column_left }}
+    {% if column_left and column_right %}
+    {% set class = 'col-lg-6' %}
+    {% elseif column_left or column_right %}
+    {% set class = 'col-lg-9' %}
+    {% else %}
+    {% set class = 'col-12' %}
+    {% endif %}
+    <div id="content" class="{{ class }}">
+		{{ content_top }}
+		{% if error_warning %}
+	  		<div class="alert alert-danger alert-dismissible mt-3"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
+	  	{% endif %}
+		<nav aria-label="breadcrumb" class="shadow mt-3">
+			<ol class="breadcrumb">
+    		{% for breadcrumb in breadcrumbs %}
+    			<li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+    		{% endfor %}
+			</ol>
+  		</nav>
+		<h2 class="pro-title">{{ heading_title }}</h2>
+		<div class="alert alert-light shadow" role="alert">
+  			{{ text_description }}
+		</div>
+		<div class="list-content shadow mb-3">
+      	<form action="{{ action }}" method="post" enctype="multipart/form-data">
+        <fieldset class="row">
+		<legend class="mb-3 px-3 py-2">{{ text_order }}</legend>
+			<div class="col-md-6 form-group required">
+            	<label for="input-firstname">{{ entry_firstname }}</label>
+              	<input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" id="input-firstname" class="form-control">
+              	{% if error_firstname %}
+              		<div class="text-danger">{{ error_firstname }}</div>
+              	{% endif %}
+			</div>
+          	<div class="col-md-6 form-group required">
+            	<label for="input-lastname">{{ entry_lastname }}</label>
+              	<input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" id="input-lastname" class="form-control">
+              	{% if error_lastname %}
+              		<div class="text-danger">{{ error_lastname }}</div>
+              	{% endif %}
+          	</div>
+          	<div class="col-md-6 form-group required">
+            	<label for="input-email">{{ entry_email }}</label>
+              	<input type="text" name="email" value="{{ email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control">
+              	{% if error_email %}
+              		<div class="text-danger">{{ error_email }}</div>
+              	{% endif %}
+          	</div>
+          	<div class="col-md-6 form-group required">
+            	<label for="input-telephone">{{ entry_telephone }}</label>
+              	<input type="tel" name="telephone" value="{{ telephone }}" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control">
+              	{% if error_telephone %}
+              		<div class="text-danger">{{ error_telephone }}</div>
+              	{% endif %}
+          	</div>
+          	<div class="col-md-6 form-group required">
+            	<label for="input-order-id">{{ entry_order_id }}</label>
+              	<input type="text" name="order_id" value="{{ order_id }}" placeholder="{{ entry_order_id }}" id="input-order-id" class="form-control">
+              	{% if error_order_id %}
+              		<div class="text-danger">{{ error_order_id }}</div>
+              	{% endif %}
+          	</div>
+          	<div class="col-md-6 form-group">
+            	<label for="input-date-ordered">{{ entry_date_ordered }}</label>
+              	<div class="input-group date">
+                	<input type="text" name="date_ordered" value="{{ date_ordered }}" placeholder="{{ entry_date_ordered }}" data-date-format="YYYY-MM-DD" id="input-date-ordered" class="form-control" />
+				</div>
+			</div>
+		</fieldset>
+		<hr>
+        <fieldset class="row">
+		<legend class="mb-3 px-3 py-2">{{ text_product }}</legend>
+			<div class="col-12 form-group required">
+            	<label for="input-product">{{ entry_product }}</label>
+              	<input type="text" name="product" value="{{ product }}" placeholder="{{ entry_product }}" id="input-product" class="form-control">
+              	{% if error_product %}
+              		<div class="text-danger">{{ error_product }}</div>
+              	{% endif %}
+          	</div>
+			<div class="col-md-6 form-group required">
+            	<label for="input-model">{{ entry_model }}</label>
+              	<input type="text" name="model" value="{{ model }}" placeholder="{{ entry_model }}" id="input-model" class="form-control">
+              	{% if error_model %}
+              		<div class="text-danger">{{ error_model }}</div>
+              	{% endif %}
+          	</div>
+          	<div class="col-md-6 form-group">
+            	<label for="input-quantity">{{ entry_quantity }}</label>
+              	<input type="number" min="1" name="quantity" value="{{ quantity }}" placeholder="{{ entry_quantity }}" id="input-quantity" class="form-control">
+          	</div>
+          	<div class="col-12 form-group required">
+            	<label>{{ entry_reason }}</label>
+				{% for return_reason in return_reasons %}
+              	{% if return_reason.return_reason_id == return_reason_id %}
+              	<div class="radio">
+                	<label>
+                  		<input type="radio" name="return_reason_id" value="{{ return_reason.return_reason_id }}" checked="checked">
+                  		{{ return_reason.name }}
+					</label>
+              </div>
+              {% else %}
+              <div class="radio">
+				<label>
+					<input type="radio" name="return_reason_id" value="{{ return_reason.return_reason_id }}">
+                  	{{ return_reason.name }}
+				</label>
+              </div>
+              {% endif %}
+              {% endfor %}
+              {% if error_reason %}
+              <div class="text-danger">{{ error_reason }}</div>
+              {% endif %}
+          	</div>
+          	<div class="col-12 form-group required">
+            	<label>{{ entry_opened }}</label>
+              	<label class="radio-inline">
+				{% if opened %}
+                	<input type="radio" name="opened" value="1" checked="checked">
+                {% else %}
+                	<input type="radio" name="opened" value="1">
+                {% endif %}
+                {{ text_yes }}
+				</label>
+              	<label class="radio-inline">
+				{% if not opened %}
+                	<input type="radio" name="opened" value="0" checked="checked">
+                {% else %}
+                	<input type="radio" name="opened" value="0" />
+                {% endif %}
+                {{ text_no }}
+				</label>
+          	</div>
+          	<div class="col-12 form-group">
+              	<textarea name="comment" rows="10" placeholder="{{ entry_fault_detail }}" id="input-comment" class="form-control">{{ comment }}</textarea>
+			</div>
+			{{ captcha }}
+		</fieldset>
+        {% if text_agree %}
+        <div class="buttons clearfix mt-3">
+          <div class="pull-left"><a href="{{ back }}" class="btn btn-danger">{{ button_back }}</a></div>
+          <div class="pull-right">{{ text_agree }}
+            {% if agree %}
+            <input type="checkbox" name="agree" value="1" checked="checked">
+            {% else %}
+            <input type="checkbox" name="agree" value="1">
+            {% endif %}
+            <input type="submit" value="{{ button_submit }}" class="btn btn-primary btn-block">
+          </div>
+        </div>
+        {% else %}
+        <div class="buttons clearfix mt-3">
+          <div class="pull-left"><a href="{{ back }}" class="btn btn-light">{{ button_back }}</a></div>
+          <div class="pull-right">
+            <input type="submit" value="{{ button_submit }}" class="btn btn-primary">
+          </div>
+        </div>
+        {% endif %}
+      </form>
+	  </div>	
+	{{ content_bottom }}
+	</div>
+    {{ column_right }}
+	</div>
+</div>
+</div>
+<script type="text/javascript"><!--
+$('#input-date-ordered').datepicker({
+	locale: 'ru-ru',
+	uiLibrary: 'bootstrap4'
+});
+$(function(){
+   $("form input[type=tel]").mask("+7 (999) 999-9999");
+});
+//--></script> 
+{{ footer }} 

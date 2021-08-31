@@ -1,0 +1,59 @@
+<div id="mobile-cart" class="d-lg-none">
+	<a class="btn btn-secondary btn-lg btn-block" href="index.php?route=checkout/cart" type="button" data-toggle="tooltip" data-placement="bottom" title="{{ text_cart }}">
+		<span class="fa fa-shopping-cart"></span> <span id="mobile_cart-total">{{ text_items }}</span>
+	</a>
+</div>
+<div id="cart" class="dropdown d-none d-lg-block">
+	<a class="btn dropdown-toggle" type="button" id="dropdownCart" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		<span id="cart-total">{{ text_items }}</span>
+	</a>
+	<ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownCart">
+	{% if products or vouchers %}
+	<li>
+	<table class="table">
+	{% for product in products %}
+	<tbody>
+		<tr>
+			<th scope="row">
+				<a class="title-cart" href="{{ product.href }}">{{ product.name }}</a>
+				{% if product.option %}
+            	{% for option in product.option %} <br> - 
+            		<p><small><i>{{ option.name }} {{ option.value }}</i></small></p>
+				{% endfor %}
+            	{% endif %}
+			</th>
+			<td class="cart-quant"><span>x</span> {{ product.quantity }}</td>
+			<td>{{ product.total }}</td>
+			<td>
+			<button type="button" class="close" data-toggle="tooltip" data-placement="left" title="{{ button_remove }}" onclick="cart.remove('{{ product.cart_id }}');">
+  				<span aria-hidden="true">&times;</span>
+			</button>
+			</td>
+		</tr>
+	</tbody>
+	{% endfor %}
+	</table>	
+	</li>
+    <li>
+	<div>
+	<table class="table table-bordered">
+	{% for total in totals %}
+		<tr>
+			<td class="text-left"><strong>{{ total.title }}</strong></td>
+            <td class="text-right">{{ total.text }}</td>
+		</tr>
+	{% endfor %}
+	</table>
+		<div class="float-rigtht">
+			<a class="btn btn-primary btn-block mb-2" href="{{ cart }}"><span class="fa fa-shopping-cart"></span> {{ text_cart }}</a>
+			<a class="btn btn-secondary btn-block" href="{{ checkout }}"><span class="fa fa-share"></span> {{ text_checkout }}</a>
+		</div>
+      </div>
+    </li>
+    {% else %}
+    <li>
+      <p class="text-center cart-none">{{ text_empty }}</p>
+    </li>
+    {% endif %}
+  </ul>
+</div>

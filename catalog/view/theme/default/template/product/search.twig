@@ -1,0 +1,198 @@
+{{ header }}
+<div id="product-search">
+<div class="container-lg">
+	<div class="row">
+		{{ column_left }}
+    	{% if column_left and column_right %}
+    	{% set class = 'col-lg-6' %}
+    	{% elseif column_left or column_right %}
+    	{% set class = 'col-lg-9' %}
+    	{% else %}
+    	{% set class = 'col-12' %}
+    	{% endif %}
+	<div id="content" class="{{ class }}">
+		{{ content_top }}
+		<nav aria-label="breadcrumb" class="shadow mt-3">
+			<ol class="breadcrumb">
+			{% for breadcrumb in breadcrumbs %}
+				<li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+			{% endfor %}
+			</ol>
+		</nav>
+	<h2 class="pro-title">{{ heading_title }}</h2>
+	<div class="cat-fill shadow mb-4 p-2">
+	<div class="form-row">
+		<div class="col-md-8">
+			<input type="text" name="search" value="{{ search }}" placeholder="{{ text_keyword }}" id="input-search" class="form-control my-1">
+		</div>
+		<div class="col-md-4">
+			<select name="category_id" class="custom-select my-1">
+            	<option value="0">{{ text_category }}</option>
+            	{% for category_1 in categories %}
+            	{% if category_1.category_id == category_id %}
+            		<option value="{{ category_1.category_id }}" selected="selected">{{ category_1.name }}</option>
+            	{% else %}
+            		<option value="{{ category_1.category_id }}">{{ category_1.name }}</option>
+            	{% endif %}
+            	{% for category_2 in category_1.children %}
+            	{% if category_2.category_id == category_id %}
+            		<option value="{{ category_2.category_id }}" selected="selected">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ category_2.name }}</option>
+            	{% else %}
+            		<option value="{{ category_2.category_id }}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ category_2.name }}</option>
+            	{% endif %}
+            	{% for category_3 in category_2.children %}
+            	{% if category_3.category_id == category_id %}
+            		<option value="{{ category_3.category_id }}" selected="selected">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ category_3.name }}</option>
+            	{% else %}
+            		<option value="{{ category_3.category_id }}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ category_3.name }}</option>
+            	{% endif %}
+            	{% endfor %}
+            	{% endfor %}
+            	{% endfor %}
+			</select>
+		</div>
+        <div class="col-md-4">
+			<label class="checkbox-inline ml-1 my-2">
+            {% if sub_category %}
+            	<input type="checkbox" name="sub_category" value="1" checked="checked">
+            {% else %}
+            	<input type="checkbox" name="sub_category" value="1">
+            {% endif %}
+            	{{ text_sub_category }}
+			</label>
+        </div>
+		<div class="col-md-4">
+			<label class="checkbox-inline ml-1 my-2">
+			{% if description %}
+				<input type="checkbox" name="description" value="1" id="description" checked="checked">
+			{% else %}
+				<input type="checkbox" name="description" value="1" id="description">
+			{% endif %}
+				{{ entry_description }}
+			</label>
+		</div>
+		<div class="col-md-4">
+			<button type="button" id="button-search" class="btn btn-primary btn-block my-1"><i class="fa fa-search"></i> {{ button_search }}</button>
+		</div>
+	</div>
+	</div>
+	<h2 class="pro-title">{{ text_search }}</h2>
+    {% if products %}
+	<div class="cat-fill shadow mb-4 p-2">
+	<div class="row">
+        <div class="col-sm-9 col-md-8 col-lg-8">
+         	<div class="form-inline float-sm-left">
+	            <label class="my-1 mr-2 ml-md-2" for="input-sort">{{ text_sort }}</label>
+				<select id="input-sort" class="custom-select my-1" onchange="location = this.value;">
+              	{% for sorts in sorts %}
+              	{% if sorts.value == '%s-%s'|format(sort, order) %}
+					<option value="{{ sorts.href }}" selected="selected">{{ sorts.text }}</option>
+				{% else %}
+              		<option value="{{ sorts.href }}">{{ sorts.text }}</option>
+				{% endif %}
+				{% endfor %}
+            	</select>
+			</div>
+		</div>
+        <div class="col-sm-3 col-md-4 col-lg-4">
+			<div class="form-inline float-sm-right">
+				<label class="my-1 mr-2" for="input-limit">{{ text_limit }}</label>
+            	<select id="input-limit" class="custom-select my-1 ml-md-2" onchange="location = this.value;">
+				{% for limits in limits %}
+				{% if limits.value == limit %}
+					<option value="{{ limits.href }}" selected="selected">{{ limits.text }}</option>
+				{% else %}
+					<option value="{{ limits.href }}">{{ limits.text }}</option>
+				{% endif %}
+				{% endfor %}
+            	</select>
+			</div>
+		</div>
+	</div>
+	</div>
+	
+	<div class="row">
+	{% for product in products %}
+  	<div class="product-layout prod-latest product-list col-lg-4 col-sm-6 col-12">
+		<div class="heart-but" data-toggle="tooltip" data-placement="top" title="{{ button_wishlist }}" onclick="wishlist.add('{{ product.product_id }}');"><i class="fa fa-heart"></i></div>
+		<div class="card shadow mb-3">
+			<a href="{{ product.href }}"><img src="{{ product.thumb }}" class="card-img-top" alt="{ product.name }}" data-toggle="tooltip" data-placement="top" title="{{ product.name }}"></a>
+			<div class="card-body">
+				<h4 class="card-title"><a href="{{ product.href }}">{{ product.name }}</a></h4>
+				{% if product.price %}
+        		<p class="price"> {% if not product.special %}
+          		{{ product.price }}
+          		{% else %} <span class="price-new">{{ product.special }}</span> <span class="price-old">{{ product.price }}</span> {% endif %}
+          		{% if product.tax %} <span class="price-tax">{{ text_tax }} {{ product.tax }}</span> {% endif %} </p>
+        		{% endif %}
+			</div>
+			<div class="card-body">
+				<div class="cart_button-group d-inline-flex" onclick="cart.add('{{ product.product_id }}');">
+					<div>{{ button_cart }}</div>
+					<div class="cart-icon"></div>
+				</div>
+			</div>
+		</div>
+  	</div>
+    {% endfor %} 
+	</div>
+	<div class="row">
+        <div class="col-12">{{ pagination }}</div>
+    </div>
+	{% else %}
+	<p class="text-left my-2">{{ text_empty }}</p>
+	{% endif %}
+	{{ content_bottom }}
+	</div>
+    {{ column_right }}
+	</div>
+</div>
+</div>
+<script type="text/javascript"><!--
+$('#button-search').bind('click', function() {
+	url = 'index.php?route=product/search';
+
+	var search = $('#content input[name=\'search\']').prop('value');
+
+	if (search) {
+		url += '&search=' + encodeURIComponent(search);
+	}
+
+	var category_id = $('#content select[name=\'category_id\']').prop('value');
+
+	if (category_id > 0) {
+		url += '&category_id=' + encodeURIComponent(category_id);
+	}
+
+	var sub_category = $('#content input[name=\'sub_category\']:checked').prop('value');
+
+	if (sub_category) {
+		url += '&sub_category=true';
+	}
+
+	var filter_description = $('#content input[name=\'description\']:checked').prop('value');
+
+	if (filter_description) {
+		url += '&description=true';
+	}
+
+	location = url;
+});
+
+$('#content input[name=\'search\']').bind('keydown', function(e) {
+	if (e.keyCode == 13) {
+		$('#button-search').trigger('click');
+	}
+});
+
+$('select[name=\'category_id\']').on('change', function() {
+	if (this.value == '0') {
+		$('input[name=\'sub_category\']').prop('disabled', true);
+	} else {
+		$('input[name=\'sub_category\']').prop('disabled', false);
+	}
+});
+
+$('select[name=\'category_id\']').trigger('change');
+--></script>
+{{ footer }}

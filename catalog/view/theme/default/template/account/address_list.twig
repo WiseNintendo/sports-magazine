@@ -1,0 +1,57 @@
+{{ header }}
+<div id="account-address">
+<div class="container-lg">
+	<div class="row">
+	{{ column_left }}
+    {% if column_left and column_right %}
+    {% set class = 'col-sm-6' %}
+    {% elseif column_left or column_right %}
+    {% set class = 'col-sm-9' %}
+    {% else %}
+    {% set class = 'col-sm-12' %}
+    {% endif %}
+    <div id="content" class="{{ class }}">
+	{{ content_top }}
+	{% if success %}
+  		<div class="alert alert-success shadow mt-3"><i class="fa fa-check-circle"></i> {{ success }}</div>
+  	{% endif %}
+  	{% if error_warning %}
+  		<div class="alert alert-warning shadow mt-3"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
+  	{% endif %}
+	<nav aria-label="breadcrumb" class="shadow mt-3">
+		<ol class="breadcrumb">
+		{% for breadcrumb in breadcrumbs %}
+			<li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+		{% endfor %}
+		</ol>
+	</nav>
+	<h2 class="pro-title">{{ text_address_book }}</h2>
+	<div class="list-content shadow mb-3">
+    {% if addresses %}
+	<div class="table-responsive">
+   		<table class="table table-bordered table-hover">
+        {% for result in addresses %}
+			<tr>
+            	<td class="text-left">{{ result.address }}</td>
+            	<td class="text-right"><a href="{{ result.update }}" class="btn btn-primary">{{ button_edit }}</a> &nbsp; <a href="{{ result.delete }}" class="btn btn-danger">{{ button_delete }}</a></td>
+          	</tr>
+		{% endfor %}
+        </table>
+	</div>
+	{% else %}
+		<p>{{ text_empty }}</p>
+	{% endif %}
+	<div class="buttons clearfix mt-3">
+		<div class="pull-left"><a href="{{ back }}" class="btn btn-light">{{ button_back }}</a></div>
+		<div class="pull-right">
+			<a href="{{ add }}" class="btn btn-primary">{{ button_new_address }}</a>
+		</div>
+	</div>
+	</div>
+	{{ content_bottom }}
+	</div>
+	{{ column_right }}
+	</div>
+</div>
+</div>
+{{ footer }}

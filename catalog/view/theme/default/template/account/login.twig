@@ -1,0 +1,207 @@
+{{ header }}
+<div id="account-login">
+<div class="container-lg">
+  	<div class="row">
+		{{ column_left }}
+    	{% if column_left and column_right %}
+    	{% set class = 'col-lg-6' %}
+    	{% elseif column_left or column_right %}
+    	{% set class = 'col-lg-9' %}
+    	{% else %}
+    	{% set class = 'col-12' %}
+    	{% endif %}
+	<div id="content" class="{{ class }}">
+		{{ content_top }}
+		<div id="alert-disinfo"></div>
+		<nav aria-label="breadcrumb" class="shadow mt-3">
+			<ol class="breadcrumb">
+			{% for breadcrumb in breadcrumbs %}
+				<li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+			{% endfor %}
+			</ol>
+		</nav>
+		<h2 class="pro-title">{{ heading_title }}</h2>
+		<div id="customAccountMenu" class="row justify-content-center">
+			<div class="col-md-7 col-lg-8">
+			<ul class="nav nav-tabs" role="tablist">
+				<li class="nav-item" role="presentation">
+    				<a class="nav-link active" data-toggle="tab" href="#AccountAuth" role="tab" aria-controls="AccountAuth" aria-selected="true">{{ text_login }}</a>
+  				</li>
+  				<li class="nav-item" role="presentation">
+    				<a class="nav-link" data-toggle="tab" href="#AccountRegistr" role="tab" aria-controls="AccountRegistr" aria-selected="false">{{ text_register }}</a>
+  				</li>
+			</ul>
+			<div class="tab-content shadow mb-3" id="customAccountContent">
+  				<div class="tab-pane fade show active" id="AccountAuth" role="tabpanel" aria-labelledby="home-tab">
+					<form id="loginAccount" method="post" enctype="multipart/form-data">
+					<div class="input-group form-group mt-3">
+        				<div class="input-group-prepend">
+          					<div class="input-group-text"><i class="fa fa-envelope" aria-hidden="true"></i></div>
+        				</div>
+                		<input type="text" name="email" value="{{ email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control" required>
+              		</div>
+              		<div class="input-group form-group">
+        				<div class="input-group-prepend">
+          					<div class="input-group-text"><i class="fa fa-unlock-alt" aria-hidden="true"></i></div>
+        				</div>
+                		<input type="password" name="password" value="{{ password }}" placeholder="{{ entry_password }}" id="input-password" class="form-control" required>
+					</div>
+					<div class="form-group text-right">
+						<a href="{{ forgotten }}">{{ text_forgotten }}</a>
+					</div>
+					<div class="form-group mb-0">
+						<button type="submit" class="btn btn-primary btn-block"><i class="fa fa-sign-in" aria-hidden="true"></i>&nbsp;{{ button_login }}</button>
+					</div>
+              		{% if redirect %}
+              			<input type="hidden" name="redirect" value="{{ redirect }}">
+              		{% endif %}
+					</form>
+				</div>
+  				<div class="tab-pane fade" id="AccountRegistr" role="tabpanel" aria-labelledby="profile-tab">
+					<form id="accountRegister" method="post" enctype="multipart/form-data">
+					<legend class="my-3">{{ text_your_details }}</legend>
+					<div id="firstname" class="input-group form-group mb-3">
+        				<div class="input-group-prepend">
+          					<div class="input-group-text"><i class="fa fa-user" aria-hidden="true"></i></div>
+        				</div>
+              			<input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" id="input-firstname" class="form-control" required>
+						<div class="invalid-feedback">{{ error_firstname }}</div>
+					</div>
+					<div id="lastname" class="input-group form-group mb-3">
+        				<div class="input-group-prepend">
+          					<div class="input-group-text"><i class="fa fa-user" aria-hidden="true"></i></div>
+        				</div>
+              			<input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" id="input-lastname" class="form-control" required>
+						<div class="invalid-feedback">{{ error_lastname }}</div>
+					</div>
+					<div id="middlename" class="input-group form-group mb-3">
+        				<div class="input-group-prepend">
+          					<div class="input-group-text"><i class="fa fa-user" aria-hidden="true"></i></div>
+        				</div>
+              			<input type="text" name="middlename" value="{{ middlename }}" placeholder="{{ entry_middlename }}" id="input-middlename" class="form-control" required>
+						<div class="invalid-feedback">{{ error_middlename }}</div>
+					</div>
+					<div id="e-mail" class="input-group form-group mb-3">
+        				<div class="input-group-prepend">
+          					<div class="input-group-text"><i class="fa fa-envelope" aria-hidden="true"></i></div>
+        				</div>
+              			<input type="text" name="email" value="{{ email }}" placeholder="{{ entry_email }}" id="input-e-mail" class="form-control" required>
+						<div class="invalid-feedback">{{ error_email }}</div>
+					</div>
+					<div id="telephone" class="input-group form-group mb-3">
+        				<div class="input-group-prepend">
+          					<div class="input-group-text"><i class="fa fa-phone" aria-hidden="true"></i></div>
+        				</div>
+              			<input type="tel" name="telephone" value="{{ telephone }}" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control" required>
+						<div class="invalid-feedback">{{ error_telephone }}</div>
+					</div>
+					<legend class="my-3">{{ text_your_password }}</legend>
+					<div id="pas-sword" class="input-group form-group mb-3">
+        				<div class="input-group-prepend">
+          					<div class="input-group-text"><i class="fa fa-unlock-alt" aria-hidden="true"></i></div>
+        				</div>
+              			<input type="password" name="password" value="{{ password }}" placeholder="{{ entry_password }}" id="input-pas-sword" class="form-control" required>
+						<div class="invalid-feedback">{{ error_password }}</div>
+					</div>						
+					<div id="confirm" class="input-group form-group mb-3">
+        				<div class="input-group-prepend">
+          					<div class="input-group-text"><i class="fa fa-unlock" aria-hidden="true"></i></div>
+        				</div>
+              			<input type="password" name="confirm" value="{{ confirm }}" placeholder="{{ entry_confirm }}" id="input-confirm" class="form-control" required>
+						<div class="invalid-feedback">{{ error_confirm }}</div>
+					</div>
+					{{ captcha }}
+					{% if text_agree %}
+  					<div class="custom-control custom-checkbox mb-3">
+    					<input type="checkbox" class="custom-control-input" name="agree" value="1" id="customAgree" required>
+    					<label class="custom-control-label small" for="customAgree">{{ text_agree }}</label>
+    					<div class="invalid-feedback">{{ error_agree }}</div>
+  					</div>
+					<div class="form-group mb-0">
+						<button type="submit" class="reg-btn btn btn-primary btn-block"><i class="fa fa-paper-plane" aria-hidden="true"></i>&nbsp;{{ text_register }}</button>
+					</div>
+					{% else %}
+					<div class="form-group mb-0">
+						<button type="submit" class="reg-btn btn btn-primary btn-block"><i class="fa fa-paper-plane" aria-hidden="true"></i>&nbsp;{{ text_register }}</button>
+					</div>
+					{% endif %}
+					</form>
+				</div>
+  			</div>
+			</div>
+		</div>
+	{{ content_bottom }}
+	</div>
+    {{ column_right }}
+	</div>
+</div>
+</div>
+<script type="text/javascript"><!--
+	$(function(){
+   		$("form input[type=tel]").mask("+7 (999) 999-9999");
+	});
+	$('#customAccountContent form#loginAccount').submit(function(){
+		$('#customAccountContent form#loginAccount').find('button[type="submit"]').attr('disabled','disabled');				
+		$.ajax({
+			type: "POST",
+			url: "index.php?route=account/login",
+			data: $('#customAccountContent form#loginAccount').serialize(),
+			success: function(res){
+				var response = JSON.parse(res);
+				$('#alert-disinfo').html('');
+				switch(response.error){
+				case 'error':
+					$('#alert-disinfo').append('<div class="alert alert-danger shadow mt-3"><i class="fa fa-exclamation-circle"></i> '+response.text+'</div>');
+				break;
+				case 'redirect':
+					$('#alert-disinfo').append('<div class="alert alert-success  shadow mt-3"><i class="fa fa-check-circle"></i> '+response.text+'</div>');
+					window.location.href = "index.php?route=account/account";
+				}
+			}
+		});
+		$('#customAccountContent form#loginAccount').find('button[type="submit"]').attr('disabled', false);
+		return false;
+	});
+	$('#AccountRegistr form#accountRegister').submit(function(){
+		$('#AccountRegistr form').find('button[type="submit"]').attr('disabled','disabled');				
+		$.ajax({
+			type: "POST",
+			url: "index.php?route=account/register",
+			data: $('#AccountRegistr form#accountRegister').serialize(),
+			success: function(res){
+				$('#accountRegister input.form-control').removeClass('is-invalid');
+				var response = JSON.parse(res);
+				response.forEach(function(respons) {
+					switch(respons.error_name){
+						case 'firstname':
+							$('#accountRegister input#input-firstname').addClass('is-invalid');
+						break;
+						case 'lastname':
+							$('#accountRegister input#input-lastname').addClass('is-invalid');
+						break;
+						case 'middlename':
+							$('#accountRegister input#input-middlename').addClass('is-invalid');
+						break;
+						case 'email':
+							$('#accountRegister input#input-e-mail').addClass('is-invalid');
+						break;
+						case 'telephone':
+							$('#accountRegister input#input-telephone').addClass('is-invalid');
+						break;
+						case 'password':
+							$('#accountRegister input#input-pas-sword').addClass('is-invalid');
+						break;
+						case 'confirm':
+							$('#accountRegister input#input-confirm').addClass('is-invalid');
+						break;
+						case 'success':
+							window.location.href = "index.php?route=account/account";
+					}
+				});
+			}
+		});
+		$('#AccountRegistr form#accountRegister').find('button[type="submit"]').attr('disabled', false);
+		return false;
+	});
+//--></script> 
+{{ footer }}

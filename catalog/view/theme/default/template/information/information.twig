@@ -1,0 +1,32 @@
+{{ header }}
+<div id="information-information">
+<div class="container-lg">
+	<div class="row">
+		{{ column_left }}
+    	{% if column_left and column_right %}
+    	{% set class = 'col-lg-6' %}
+    	{% elseif column_left or column_right %}
+    	{% set class = 'col-lg-9' %}
+    	{% else %}
+    	{% set class = 'col-12' %}
+    	{% endif %}
+	<div id="content" class="{{ class }}">
+		{{ content_top }}
+		<nav aria-label="breadcrumb" class="shadow mt-3">
+			<ol class="breadcrumb">
+			{% for breadcrumb in breadcrumbs %}
+				<li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+			{% endfor %}
+			</ol>
+		</nav>
+		<h2 class="pro-title">{{ heading_title }}</h2>
+		<div class="list-content shadow mb-3">
+			{{ description }}
+		</div>
+		{{ content_bottom }}
+	</div>
+    	{{ column_right }}
+	</div>
+</div>
+</div>
+{{ footer }}
